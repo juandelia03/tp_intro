@@ -1,29 +1,89 @@
-import Test.HUnit
+module Test where
+
 import Solucion
+import Test.HUnit
 
 main = runTestTT tests
 
+-- tests = test [
+--     " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
+
+--     " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4],
+
+--     " cantidadDeAmigos 1" ~: (cantidadDeAmigos redA usuario1) ~?= 2,
+
+--     " usuarioConMasAmigos 1" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4],
+
+--     " estaRobertoCarlos 1" ~: (estaRobertoCarlos redA) ~?= False,
+
+--     " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2],
+
+--     " publicacionesQueLeGustanA 1" ~: (publicacionesQueLeGustanA redA usuario1) ~?= [publicacion2_2, publicacion4_1],
+
+--     " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True,
+
+--     " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True,
+
+--     " existeSecuenciaDeAmigos 1" ~: (existeSecuenciaDeAmigos redA usuario1 usuario3) ~?= True
+--  ]
+
 tests = test [
-    " nombresDeUsuarios 1" ~: (nombresDeUsuarios redA) ~?= ["Juan","Natalia","Pedro","Mariela"],
-
-    " amigosDe 1" ~: (amigosDe redA usuario1) ~?= [usuario2, usuario4],
-
-    " cantidadDeAmigos 1" ~: (cantidadDeAmigos redA usuario1) ~?= 2,
-
-    " usuarioConMasAmigos 1" ~: expectAny (usuarioConMasAmigos redA) [usuario2, usuario4],
-
-    " estaRobertoCarlos 1" ~: (estaRobertoCarlos redA) ~?= False,
-
-    " publicacionesDe 1" ~: (publicacionesDe redA usuario2) ~?= [publicacion2_1, publicacion2_2],
-
-    " publicacionesQueLeGustanA 1" ~: (publicacionesQueLeGustanA redA usuario1) ~?= [publicacion2_2, publicacion4_1],
-
-    " lesGustanLasMismasPublicaciones 2" ~: (lesGustanLasMismasPublicaciones redB usuario1 usuario3) ~?= True,
-
-    " tieneUnSeguidorFiel 1" ~: (tieneUnSeguidorFiel redA usuario1) ~?= True,
-
-    " existeSecuenciaDeAmigos 1" ~: (existeSecuenciaDeAmigos redA usuario1 usuario3) ~?= True
+    "nombresDeUsuarios" ~: testsNombresDeUsuarios,
+    "amigosDe" ~: testsAmigosDe,
+    "cantidadDeAmigos" ~: testsCantidadDeAmigos,
+    "usuarioConMasAmigos" ~: testsUsuarioConMasAmigos,
+    "estaRobertoCarlos" ~: testsEstaRobertoCarlos,
+    "publicacionesDe" ~: testsPublicacionesDe,
+    "publicacionesQueLeGustanA" ~: testsPublicacionesQueLeGustanA,
+    "lesGustanLasMismasPublicaciones" ~: testsLesGustanLasMismasPublicaciones,
+    "tieneUnSeguidorFiel" ~: testsTieneUnSeguidorFiel,
+    "existeSecuenciaDeAmigos" ~: testsExisteSecuenciaDeAmigos
  ]
+
+
+
+testsNombresDeUsuarios = test [
+    nombresDeUsuarios ([],[],[]) ~?= [],
+    nombresDeUsuarios redA ~?= ["Juan","Natalia","Pedro","Mariela"]
+ ]
+
+testsAmigosDe = test [
+    amigosDe ([usuario1],[],[]) usuario1 ~?= [],
+    amigosDe redA usuario1 ~?= [usuario2, usuario4]
+ ]
+
+testsCantidadDeAmigos = test [
+    cantidadDeAmigos redA usuario1 ~?= 2
+ ]
+
+testsUsuarioConMasAmigos = test [
+    expectAny (usuarioConMasAmigos redA) [usuario2, usuario4] -- espera que sea u2 o u4
+ ]
+
+testsEstaRobertoCarlos = test [
+    estaRobertoCarlos redA ~?= False
+ ]
+
+testsPublicacionesDe = test [
+    publicacionesDe redA usuario2 ~?= [publicacion2_1, publicacion2_2]
+ ]
+
+testsPublicacionesQueLeGustanA = test [
+    publicacionesQueLeGustanA redA usuario1 ~?= [publicacion2_2, publicacion4_1]
+ ]
+
+testsLesGustanLasMismasPublicaciones = test [
+    lesGustanLasMismasPublicaciones redB usuario1 usuario3 ~?= True
+ ]
+
+testsTieneUnSeguidorFiel = test [
+    tieneUnSeguidorFiel redA usuario1 ~?= True
+ ]
+
+testsExisteSecuenciaDeAmigos = test [
+    existeSecuenciaDeAmigos redA usuario1 usuario3 ~?= True
+ ]
+
 
 expectAny actual expected = elem actual expected ~? ("expected any of: " ++ show expected ++ "\n but got: " ++ show actual)
 
