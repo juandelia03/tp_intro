@@ -118,7 +118,7 @@ usuarioConMasAmigos ((u:us),rs,ps) | (cantidadDeAmigos ((u:us),rs,ps) u) >= (can
 -- hasta que alguno cumpla (Caso True) o hasta llegar a la lista vacia (Caso False)
 estaRobertoCarlos :: RedSocial -> Bool
 estaRobertoCarlos ([],rs,ps) = False
-estaRobertoCarlos ((u:us),rs,ps) | cantidadDeAmigos ((u:us),rs,ps) u > 1000000 = True
+estaRobertoCarlos ((u:us),rs,ps) | cantidadDeAmigos ((u:us),rs,ps) u > 10 = True
                                  | otherwise = estaRobertoCarlos (us,rs,ps)
 
 
@@ -170,14 +170,14 @@ tieneUnSeguidorFiel (u:us,rs,ps) u1 | u == u1 = tieneUnSeguidorFiel (us,rs,ps) u
 existeSecuenciaDeAmigos :: RedSocial -> Usuario -> Usuario -> Bool
 existeSecuenciaDeAmigos rs u1 u2  = existeSecuenciaDeAmigosAux rs u1 u2 [u1]
 
--- la funcion chequea que al agregar a todos los amigos de cada uno de los usuarios de una lista a esa misma lista (y asi sucesivamente) seria posible formar una cadena
--- en el caso de que (empezando la lista con el u1) en algun momento aparezca el u2 en la lista, ya que solamente agregando a los amigos de u1 y los amigos de sus amigos (y asi sucesivamente)
--- apareceria u2 , en el caso  de que se busquen los amigos de cada uno en la lista y al agregarse esos usuarios a la lista ambas tengan los mismo elementos, significaria que no hay mas cadenas posibles para formar
+
+-- la idea de la funcion es que toma una lista del primer usuario y sus amigos, y agrega a los amigos de cada usuario de esa lista a la misma lista (y asi sucesivamente); hasta que nos devuelva la misma lista que toma como parametro o aparezca el otro usuario.
+-- Seria posible formar una cadena en el caso de que (empezando la lista con el u1) en algun momento aparezca el u2 en la lista, ya que solamente agregando a los amigos de u1 y los amigos de sus amigos (y asi sucesivamente)
+-- apareceria u2 , en el caso de que se busquen los amigos de cada uno en la lista y al agregarse esos usuarios a la lista ambas tengan los mismo elementos, significaria que no hay mas cadenas posibles para formar
 -- y si no aparecio u2 entonces no existe ninguna secuenciaDeAmigos que empiece con u1 y llegue a u2. En el caso de que u2 pertenezca a la secuencia significa que existe alguna cadena de amigos de u1 a u2
-existeSecuenciaDeAmigosAux :: RedSocial -> Usuario -> Usuario ->[Usuario] -> Bool
+existeSecuenciaDeAmigosAux :: RedSocial -> Usuario -> Usuario -> [Usuario] -> Bool
 existeSecuenciaDeAmigosAux rs u1 u2 cluster | pertenece u2  cluster = True
-                                            | mismosElementos cluster (cluster ++ agregarAmigosDeCadaUnoSinRepetidos rs cluster) = False
-                                        --     | otherwise = existeSecuenciaDeAmigosAux rs u1 u2 (eliminarRepetidos  (cluster ++ (agregarAmigosDeCadaUnoSinRepetidos rs cluster)))          
+                                            | mismosElementos cluster (cluster ++ agregarAmigosDeCadaUnoSinRepetidos rs cluster) = False    
                                             | otherwise = existeSecuenciaDeAmigosAux rs u1 u2 ( (cluster ++ (agregarAmigosDeCadaUnoSinRepetidos rs cluster)))          
 
 agregarAmigosDeCadaUnoAux :: RedSocial -> [Usuario] -> [Usuario] -> [Usuario]
