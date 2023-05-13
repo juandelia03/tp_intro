@@ -4,8 +4,8 @@
 -- Integrante 1: Jauregui Juan Manuel, juanmacarpps4@gmail.com, 1015/22
 -- Integrante 2: D'elia Juan, juanchif5017@gmail.com, 930/22
 -- Integrante 3: Alvarez Motta Martina Noel, martinaalvarezmotta@gmail.com, 969/22
- 
 -- Integrante 4: Marciale Thaiel Takashi, ttmarciale@gmail.com, 244/23
+
 module Solucion where
 
 
